@@ -7,9 +7,6 @@ task:
       name: worker
 
   name: worker
-  timeout_in: 4h
-    cpu: 8
-    memory: 32G
 
   check_script:
     - echo $(nproc --all)
