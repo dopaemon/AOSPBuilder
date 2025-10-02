@@ -18,6 +18,7 @@ task:
     - echo $(df -h)
 
   setup_script:
+    - rm -rf /home/kernelpanix/out/CherishOS
     - mkdir -p /home/kernelpanix/out/CherishOS
     - rm -rf /home/kernelpanix/CherishOS/out/.lock
     - cd /home/kernelpanix/out/CherishOS
