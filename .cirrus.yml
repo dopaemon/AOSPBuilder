@@ -10,7 +10,12 @@ task:
   setup_script:
     - mkdir -p /home/kernelpanix/out/CherishOS
     - rm -rf /home/kernelpanix/CherishOS/out/.lock
-
+    - cd /home/kernelpanix/out/CherishOS
+    - wget https://github.com/ling-zhou/rust-sshpass/releases/download/1.1.5/sshpass-1.1.5-x86_64-linux.tar.xz
+    - tar -xvf sshpass-1.1.5-x86_64-linux.tar.xz
+    - wget https://github.com/ManuelReschke/go-pd/releases/download/v1.5.0/go-pd_1.5.0_linux_amd64.tar.gz
+    - tar -xvf go-pd_1.5.0_linux_amd64.tar.gz
+  
   cupid_script:
     - DEVICE="cupid"
     - cd /home/kernelpanix/CherishOS
@@ -46,3 +51,10 @@ task:
     - brunch $DEVICE | tee log.txt
     - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
+  sourceforge_script:
+    - cd /home/kernelpanix/CherishOS
+    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/CherishOS
+
+  pixeldrain_script:
+    - cd /home/kernelpanix/CherishOS
+    -  ./go-pd upload -k *.zip -v
