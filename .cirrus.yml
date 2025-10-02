@@ -68,9 +68,9 @@ task:
     - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip /home/kernelpanix/out/DerpFest/
 
   sourceforge_script:
-    - cd /home/kernelpanix/DerpFest
+    - cd /home/kernelpanix/out/DerpFest
     - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/DerpFest
 
   pixeldrain_script:
-    - cd /home/kernelpanix/DerpFest
+    - cd /home/kernelpanix/out/DerpFest
     -  ./go-pd upload -k $PD_API_KEY *.zip -v
