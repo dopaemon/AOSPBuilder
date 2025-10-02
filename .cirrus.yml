@@ -1,4 +1,7 @@
 env:
+    CIRRUS_CLONE_DEPTH: 1
+    BUILD_HOSTNAME: "CirrusCI"
+    DEBIAN_FRONTEND: "noninteractive"
     PD_API_KEY: ENCRYPTED[34bc583e19c47c56dc0c1f9950553e9d9c8ec6dcee3c46ed85b83d089ae3e7546324f893ff919531195207645caf9333]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
     
@@ -15,6 +18,7 @@ task:
     - echo $(df -h)
 
   setup_script:
+    - rm -rf /home/kernelpanix/out/DerpFest
     - mkdir -p /home/kernelpanix/out/DerpFest
     - rm -rf /home/kernelpanix/DerpFest/out/.lock
     - cd /home/kernelpanix/out/DerpFest
@@ -34,7 +38,7 @@ task:
   zeus_script:
     - DEVICE="zeus"
     - cd /home/kernelpanix/DerpFest
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - lunch lineage_$DEVICE-bp2a-user
     - mka derp -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip /home/kernelpanix/out/DerpFest/
@@ -42,7 +46,7 @@ task:
   mayfly_script:
     - DEVICE="mayfly"
     - cd /home/kernelpanix/DerpFest
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - lunch lineage_$DEVICE-bp2a-user
     - mka derp -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip /home/kernelpanix/out/DerpFest/
@@ -50,7 +54,7 @@ task:
   unicorn_script:
     - DEVICE="unicorn"
     - cd /home/kernelpanix/DerpFest
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - lunch lineage_$DEVICE-bp2a-user
     - mka derp -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip /home/kernelpanix/out/DerpFest/
@@ -58,7 +62,7 @@ task:
   diting_script:
     - DEVICE="diting"
     - cd /home/kernelpanix/DerpFest
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - lunch lineage_$DEVICE-bp2a-user
     - mka derp -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip /home/kernelpanix/out/DerpFest/
