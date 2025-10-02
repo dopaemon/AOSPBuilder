@@ -57,4 +57,4 @@ task:
 
   pixeldrain_script:
     - cd /home/kernelpanix/CherishOS
-    -  ./go-pd upload -k *.zip -v
+    -  ./go-pd upload -k $PD_API_KEY *.zip -v
