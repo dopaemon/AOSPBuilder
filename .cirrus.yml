@@ -1,12 +1,5 @@
 task:
   persistent_worker:
-    labels:
-      distro: ubuntu
-      os: linux
-      arch: amd64
-      name: worker
-
-  name: worker
 
   check_script:
     - echo $(nproc --all)
