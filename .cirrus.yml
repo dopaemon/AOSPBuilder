@@ -1,10 +1,24 @@
 task:
   persistent_worker:
     labels:
+      distro: ubuntu
+      os: linux
+      arch: amd64
       name: worker
+
+  name: worker
+  timeout_in: 4h
+    cpu: 8
+    memory: 32G
+
+  check_script:
+    - echo $(nproc --all)
+    - echo free -mh
+    - echo df -h
 
   setup_script:
     - mkdir -p /home/kernelpanix/out/CherishOS
+    - rm -rf /home/kernelpanix/CherishOS/out/.lock
 
   cupid_script:
     - DEVICE="cupid"
