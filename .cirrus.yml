@@ -1,10 +1,11 @@
 task:
   persistent_worker:
+  timeout_in: 8h
 
   check_script:
     - echo $(nproc --all)
-    - echo free -mh
-    - echo df -h
+    - echo $(free -mh)
+    - echo $(df -h)
 
   setup_script:
     - mkdir -p /home/kernelpanix/out/CherishOS
