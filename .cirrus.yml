@@ -29,35 +29,35 @@ task:
   cupid_script:
     - DEVICE="cupid"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - brunch $DEVICE | tee log.txt
     - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
   zeus_script:
     - DEVICE="zeus"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - brunch $DEVICE | tee log.txt
     - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
   mayfly_script:
     - DEVICE="mayfly"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - brunch $DEVICE | tee log.txt
     - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
   unicorn_script:
     - DEVICE="unicorn"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - brunch $DEVICE | tee log.txt
     - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
   diting_script:
     - DEVICE="diting"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh
+    - . build/envsetup.sh || true
     - brunch $DEVICE | tee log.txt
     - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
