@@ -36,7 +36,7 @@ cupid_task:
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: setup_task
+  depends_on: setup
   cupid_script:
     - DEVICE="cupid"
     - cd /home/kernelpanix/RisingOS
@@ -51,7 +51,7 @@ zeus_task:
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: cupid_task
+  depends_on: cupid
   zeus_script:
     - DEVICE="zeus"
     - cd /home/kernelpanix/RisingOS
@@ -66,7 +66,7 @@ mayfly_task:
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: zeus_task
+  depends_on: zeus
   mayfly_script:
     - DEVICE="mayfly"
     - cd /home/kernelpanix/RisingOS
@@ -81,7 +81,7 @@ unicorn_task:
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: mayfly_task
+  depends_on: mayfly
   unicorn_script:
     - DEVICE="unicorn"
     - cd /home/kernelpanix/RisingOS
@@ -96,7 +96,7 @@ diting_task:
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: unicorn_task
+  depends_on: unicorn
   diting_script:
     - DEVICE="diting"
     - cd /home/kernelpanix/RisingOS
@@ -112,11 +112,11 @@ task:
   persistent_worker:
   timeout_in: 24h
   depends_on:
-    - cupid_task
-    - zeus_task
-    - mayfly_task
-    - unicorn_task
-    - diting_task
+    - cupid
+    - zeus
+    - mayfly
+    - unicorn
+    - diting
 
   sourceforge_script:
     - cd /home/kernelpanix/out/RisingOS
