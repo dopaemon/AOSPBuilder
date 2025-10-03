@@ -6,7 +6,7 @@ env:
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
 
 setup_task:
-  name: Setup
+  name: Enviroment
   only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
