@@ -7,7 +7,7 @@ env:
 
 task:
   name: Enviroment
-  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   alias: Enviroment
   persistent_worker:
   timeout_in: 24h
@@ -21,10 +21,10 @@ task:
     - echo $(df -h)
 
   enviroment_script:
-    - rm -rf /home/kernelpanix/out/RisingOS
-    - mkdir -p /home/kernelpanix/out/RisingOS
-    - rm -rf /home/kernelpanix/RisingOS/out/.lock
-    - cd /home/kernelpanix/out/RisingOS
+    - rm -rf /home/kernelpanix/out/InfinityX
+    - mkdir -p /home/kernelpanix/out/InfinityX
+    - rm -rf /home/kernelpanix/InfinityX/out/.lock
+    - cd /home/kernelpanix/out/InfinityX
     - wget https://github.com/ling-zhou/rust-sshpass/releases/download/1.1.5/sshpass-1.1.5-x86_64-linux.tar.xz
     - tar -xvf sshpass-1.1.5-x86_64-linux.tar.xz
     - wget https://github.com/ManuelReschke/go-pd/releases/download/v1.5.0/go-pd_1.5.0_linux_amd64.tar.gz
@@ -32,82 +32,82 @@ task:
 
 task:
   name: Xiaomi 12
-  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   alias: CupidBuild
   depends_on: Enviroment
   persistent_worker:
   timeout_in: 24h
   cupid_script:
     - DEVICE="cupid"
-    - cd /home/kernelpanix/RisingOS
+    - cd /home/kernelpanix/InfinityX
     - . build/envsetup.sh || true
-    - riseup $DEVICE user
-    - rise b -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - lunch infinity_mayfly-user
+    - m bacon -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
 
 task:
   name: Xiaomi 12 Pro
-  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   persistent_worker:
   timeout_in: 24h
   alias: ZeusBuild
   depends_on: CupidBuild
   zeus_script:
     - DEVICE="zeus"
-    - cd /home/kernelpanix/RisingOS
+    - cd /home/kernelpanix/InfinityX
     - . build/envsetup.sh || true
-    - riseup $DEVICE user
-    - rise b -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - lunch infinity_mayfly-user
+    - m bacon -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
 
 task:
   name: Xiaomi 12S
-  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   persistent_worker:
   timeout_in: 24h
   alias: MayflyBuild
   depends_on: ZeusBuild
   mayfly_script:
     - DEVICE="mayfly"
-    - cd /home/kernelpanix/RisingOS
+    - cd /home/kernelpanix/InfinityX
     - . build/envsetup.sh || true
-    - riseup $DEVICE user
-    - rise b -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - lunch infinity_mayfly-user
+    - m bacon -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
 
 task:
   name: Xiaomi 12S Pro
-  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   persistent_worker:
   timeout_in: 24h
   alias: UnicornBuild
   depends_on: MayflyBuild
   unicorn_script:
     - DEVICE="unicorn"
-    - cd /home/kernelpanix/RisingOS
+    - cd /home/kernelpanix/InfinityX
     - . build/envsetup.sh || true
-    - riseup $DEVICE user
-    - rise b -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - lunch infinity_mayfly-user
+    - m bacon -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
 
 task:
   name: Xiaomi 12T Pro
-  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   persistent_worker:
   timeout_in: 24h
   alias: DitingBuild
   depends_on: UnicornBuild
   diting_script:
     - DEVICE="diting"
-    - cd /home/kernelpanix/RisingOS
+    - cd /home/kernelpanix/InfinityX
     - . build/envsetup.sh || true
-    - riseup $DEVICE user
-    - rise b -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - lunch infinity_mayfly-user
+    - m bacon -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
 
 task:
   name: Upload
-  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   persistent_worker:
   timeout_in: 24h
   depends_on:
@@ -118,9 +118,9 @@ task:
     - DitingBuild
 
   sourceforge_script:
-    - cd /home/kernelpanix/out/RisingOS
-    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/RisingOS
+    - cd /home/kernelpanix/out/InfinityX
+    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/InfinityX
 
   pixeldrain_script:
-    - cd /home/kernelpanix/out/RisingOS
+    - cd /home/kernelpanix/out/InfinityX
     -  ./go-pd upload -k $PD_API_KEY *.zip -v
