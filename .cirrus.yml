@@ -132,7 +132,7 @@ task:
     - git clone -b lineage-23.0 --single-branch https://github.com/TheMuppets/proprietary_vendor_xiaomi_sm8550-common.git vendor/xiaomi/sm8550-common
     - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-modules.git kernel/xiaomi/sm8550-modules
     - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-devicetrees.git kernel/xiaomi/sm8550-devicetrees
-  diting_script:
+  socrates_script:
     - DEVICE="socrates"
     - cd /home/kernelpanix/CherishOS
     - . build/envsetup.sh > /dev/null 2>&1 || true
