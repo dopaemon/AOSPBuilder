@@ -45,13 +45,13 @@ task:
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS-*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
 
-zeus_task:
+task:
   name: Xiaomi 12 Pro
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: cupid
+  alias: ZeusBuild
+  depends_on: CupidBuild
   zeus_script:
     - DEVICE="zeus"
     - cd /home/kernelpanix/RisingOS
@@ -60,13 +60,13 @@ zeus_task:
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS-*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
 
-mayfly_task:
+task:
   name: Xiaomi 12S
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: zeus
+  alias: MayflyBuild
+  depends_on: ZeusBuild
   mayfly_script:
     - DEVICE="mayfly"
     - cd /home/kernelpanix/RisingOS
@@ -75,13 +75,13 @@ mayfly_task:
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS-*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
 
-unicorn_task:
+task:
   name: Xiaomi 12S Pro
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: mayfly
+  alias: UnicornBuild
+  depends_on: MayflyBuild
   unicorn_script:
     - DEVICE="unicorn"
     - cd /home/kernelpanix/RisingOS
@@ -90,13 +90,13 @@ unicorn_task:
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS-*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
 
-diting_task:
+task:
   name: Xiaomi 12T Pro
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: unicorn
+  alias: DitingBuild
+  depends_on: UnicornBuild
   diting_script:
     - DEVICE="diting"
     - cd /home/kernelpanix/RisingOS
@@ -107,16 +107,15 @@ diting_task:
 
 task:
   name: Upload
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
   depends_on:
-    - cupid
-    - zeus
-    - mayfly
-    - unicorn
-    - diting
+    - CupidBuild
+    - ZeusBuild
+    - MayflyBuild
+    - UnicornBuild
+    - DitingBuild
 
   sourceforge_script:
     - cd /home/kernelpanix/out/RisingOS
