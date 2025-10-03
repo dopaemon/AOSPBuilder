@@ -32,12 +32,10 @@ first_task:
 
 cupid_task:
   name: Xiaomi 12
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
+  depends_on: first
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on:
-    - first
   cupid_script:
     - DEVICE="cupid"
     - cd /home/kernelpanix/RisingOS
