@@ -122,6 +122,8 @@ task:
     - rm -rf vendor/xiaomi/unicorn
     - rm -rf vendor/xiaomi/diting
     - rm -rf kernel/xiaomi/sm845*
+    - rm -rf device/xiaomi/miuicamera-cupid
+    - rm -rf vendor/xiaomi/miuicamera-cupid
   clone_script:
     - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_socrates.git device/xiaomi/socrates
     - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_sm8550-common.git device/xiaomi/sm8550-common
