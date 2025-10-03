@@ -4,20 +4,23 @@ env:
     DEBIAN_FRONTEND: "noninteractive"
     PD_API_KEY: ENCRYPTED[34bc583e19c47c56dc0c1f9950553e9d9c8ec6dcee3c46ed85b83d089ae3e7546324f893ff919531195207645caf9333]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
-    
+
 task:
-  name: Setup
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'CherishOS-A16'
+  name: Enviroment
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  alias: Enviroment
   persistent_worker:
   timeout_in: 24h
+
+  script:
+    - echo "Starting setup environment..."
 
   check_script:
     - echo $(nproc --all)
     - echo $(free -mh)
     - echo $(df -h)
 
-  setup_script:
+  enviroment_script:
     - rm -rf /home/kernelpanix/out/CherishOS
     - mkdir -p /home/kernelpanix/out/CherishOS
     - rm -rf /home/kernelpanix/CherishOS/out/.lock
@@ -29,76 +32,124 @@ task:
 
 task:
   name: Xiaomi 12
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'CherishOS-A16'
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  alias: CupidBuild
+  depends_on: Enviroment
   persistent_worker:
   timeout_in: 24h
   cupid_script:
     - DEVICE="cupid"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh || true
+    - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
 task:
   name: Xiaomi 12 Pro
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'CherishOS-A16'
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
   persistent_worker:
   timeout_in: 24h
+  alias: ZeusBuild
+  depends_on: CupidBuild
   zeus_script:
     - DEVICE="zeus"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh || true
+    - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
 task:
   name: Xiaomi 12S
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'CherishOS-A16'
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
   persistent_worker:
   timeout_in: 24h
+  alias: MayflyBuild
+  depends_on: ZeusBuild
   mayfly_script:
     - DEVICE="mayfly"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh || true
+    - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
 task:
   name: Xiaomi 12S Pro
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'CherishOS-A16'
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
   persistent_worker:
   timeout_in: 24h
+  alias: UnicornBuild
+  depends_on: MayflyBuild
   unicorn_script:
     - DEVICE="unicorn"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh || true
+    - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
 task:
   name: Xiaomi 12T Pro
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'CherishOS-A16'
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
   persistent_worker:
   timeout_in: 24h
+  alias: DitingBuild
+  depends_on: UnicornBuild
   diting_script:
     - DEVICE="diting"
     - cd /home/kernelpanix/CherishOS
-    - . build/envsetup.sh || true
+    - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS-*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
 
 task:
-  name: Upload
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'CherishOS-A16'
+  name: Xiaomi K60 Pro
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
   persistent_worker:
   timeout_in: 24h
-  
+  alias: SocratesBuild
+  depends_on: DitingBuild
+  clean_script:
+    - cd /home/kernelpanix/CherishOS
+    - rm -rf device/xiaomi/sm8450-common
+    - rm -rf device/xiaomi/cupid
+    - rm -rf device/xiaomi/zeus
+    - rm -rf device/xiaomi/mayfly
+    - rm -rf device/xiaomi/unicorn
+    - rm -rf device/xiaomi/diting
+    - rm -rf vendor/xiaomi/sm8450-common
+    - rm -rf vendor/xiaomi/cupid
+    - rm -rf vendor/xiaomi/zeus
+    - rm -rf vendor/xiaomi/mayfly
+    - rm -rf vendor/xiaomi/unicorn
+    - rm -rf vendor/xiaomi/diting
+    - rm -rf kernel/xiaomi/sm845*
+  clone_script:
+    - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_socrates.git device/xiaomi/socrates
+    - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_sm8550-common.git device/xiaomi/sm8550-common
+    - git clone -b 16.0 --single-branch --depth=1 --recurse-submodules https://github.com/dopaemon/android_kernel_xiaomi_sm8550.git kernel/xiaomi/sm8550
+    - git clone -b lineage-23.0 --single-branch https://github.com/TheMuppets/proprietary_vendor_xiaomi_socrates.git vendor/xiaomi/socrates
+    - git clone -b lineage-23.0 --single-branch https://github.com/TheMuppets/proprietary_vendor_xiaomi_sm8550-common.git vendor/xiaomi/sm8550-common
+    - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-modules.git kernel/xiaomi/sm8550-modules
+    - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-devicetrees.git kernel/xiaomi/sm8550-devicetrees
+  diting_script:
+    - DEVICE="socrates"
+    - cd /home/kernelpanix/CherishOS
+    - . build/envsetup.sh > /dev/null 2>&1 || true
+    - brunch $DEVICE | tee log.txt
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+
+task:
+  name: Upload
+  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  persistent_worker:
+  timeout_in: 24h
+  depends_on:
+    - CupidBuild
+    - ZeusBuild
+    - MayflyBuild
+    - UnicornBuild
+    - DitingBuild
+    - SocratesBuild
+
   sourceforge_script:
     - cd /home/kernelpanix/out/CherishOS
     - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/CherishOS
