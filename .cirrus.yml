@@ -5,10 +5,10 @@ env:
     PD_API_KEY: ENCRYPTED[34bc583e19c47c56dc0c1f9950553e9d9c8ec6dcee3c46ed85b83d089ae3e7546324f893ff919531195207645caf9333]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
 
-first_task:
+task:
   name: Enviroment
-  only_if: $CIRRUS_REPO_OWNER == 'dopaemon' && $CIRRUS_BRANCH == 'RisingOS-A16'
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  alias: Enviroment
   persistent_worker:
   timeout_in: 24h
 
@@ -30,10 +30,11 @@ first_task:
     - wget https://github.com/ManuelReschke/go-pd/releases/download/v1.5.0/go-pd_1.5.0_linux_amd64.tar.gz
     - tar -xvf go-pd_1.5.0_linux_amd64.tar.gz
 
-cupid_task:
+task:
   name: Xiaomi 12
-  depends_on: first
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  alias: CupidBuild
+  depends_on: Enviroment
   persistent_worker:
   timeout_in: 24h
   cupid_script:
