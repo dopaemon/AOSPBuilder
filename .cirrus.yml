@@ -12,6 +12,9 @@ setup_task:
   persistent_worker:
   timeout_in: 24h
 
+  script:
+    - echo "Starting setup environment..."
+
   check_script:
     - echo $(nproc --all)
     - echo $(free -mh)
@@ -63,7 +66,7 @@ mayfly_task:
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
   timeout_in: 24h
-  depends_on: mayfly_task
+  depends_on: zeus_task
   mayfly_script:
     - DEVICE="mayfly"
     - cd /home/kernelpanix/RisingOS
