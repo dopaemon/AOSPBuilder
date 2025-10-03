@@ -20,7 +20,7 @@ setup_task:
     - echo $(free -mh)
     - echo $(df -h)
 
-  setup_script:
+  enviroment_script:
     - rm -rf /home/kernelpanix/out/RisingOS
     - mkdir -p /home/kernelpanix/out/RisingOS
     - rm -rf /home/kernelpanix/RisingOS/out/.lock
