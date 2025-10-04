@@ -16,6 +16,7 @@ task:
 
   script:
     - echo "Starting setup environment..."
+    - echo $(pwd)
 
   check_script:
     - echo $(nproc --all)
