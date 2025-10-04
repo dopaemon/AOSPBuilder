@@ -2,6 +2,8 @@ env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
     DEBIAN_FRONTEND: "noninteractive"
+    CIRRUS_WORKING_DIR: "/home/kernelpanix/CherishOS"
+    CIRRUS_OUT_DIR: "/home/kernelpanix/out/CherishOS"
     PD_API_KEY: ENCRYPTED[34bc583e19c47c56dc0c1f9950553e9d9c8ec6dcee3c46ed85b83d089ae3e7546324f893ff919531195207645caf9333]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
 
@@ -21,10 +23,10 @@ task:
     - echo $(df -h)
 
   enviroment_script:
-    - rm -rf /home/kernelpanix/out/CherishOS
-    - mkdir -p /home/kernelpanix/out/CherishOS
-    - rm -rf /home/kernelpanix/CherishOS/out/.lock
-    - cd /home/kernelpanix/out/CherishOS
+    - rm -rf $CIRRUS_OUT_DIR
+    - mkdir -p $CIRRUS_OUT_DIR
+    - rm -rf $CIRRUS_WORKING_DIR/out/.lock
+    - cd $CIRRUS_OUT_DIR
     - wget https://github.com/ling-zhou/rust-sshpass/releases/download/1.1.5/sshpass-1.1.5-x86_64-linux.tar.xz
     - tar -xvf sshpass-1.1.5-x86_64-linux.tar.xz
     - wget https://github.com/ManuelReschke/go-pd/releases/download/v1.5.0/go-pd_1.5.0_linux_amd64.tar.gz
@@ -39,10 +41,9 @@ task:
   timeout_in: 24h
   cupid_script:
     - DEVICE="cupid"
-    - cd /home/kernelpanix/CherishOS
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12 Pro
@@ -53,10 +54,9 @@ task:
   depends_on: CupidBuild
   zeus_script:
     - DEVICE="zeus"
-    - cd /home/kernelpanix/CherishOS
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12S
@@ -67,10 +67,9 @@ task:
   depends_on: ZeusBuild
   mayfly_script:
     - DEVICE="mayfly"
-    - cd /home/kernelpanix/CherishOS
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12S Pro
@@ -81,10 +80,9 @@ task:
   depends_on: MayflyBuild
   unicorn_script:
     - DEVICE="unicorn"
-    - cd /home/kernelpanix/CherishOS
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12T Pro
@@ -95,10 +93,9 @@ task:
   depends_on: UnicornBuild
   diting_script:
     - DEVICE="diting"
-    - cd /home/kernelpanix/CherishOS
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi K60 Pro
@@ -108,7 +105,6 @@ task:
   alias: SocratesBuild
   depends_on: DitingBuild
   clean_script:
-    - cd /home/kernelpanix/CherishOS
     - rm -rf device/xiaomi/sm8450-common
     - rm -rf device/xiaomi/cupid
     - rm -rf device/xiaomi/zeus
@@ -134,10 +130,9 @@ task:
     - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-devicetrees.git kernel/xiaomi/sm8550-devicetrees
   socrates_script:
     - DEVICE="socrates"
-    - cd /home/kernelpanix/CherishOS
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip /home/kernelpanix/out/CherishOS/
+    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Upload
@@ -153,9 +148,9 @@ task:
     - SocratesBuild
 
   sourceforge_script:
-    - cd /home/kernelpanix/out/CherishOS
+    - cd $CIRRUS_OUT_DIR/
     - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/CherishOS
 
   pixeldrain_script:
-    - cd /home/kernelpanix/out/CherishOS
+    - cd $CIRRUS_OUT_DIR/
     -  ./go-pd upload -k $PD_API_KEY *.zip -v
