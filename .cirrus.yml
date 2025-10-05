@@ -104,46 +104,6 @@ task:
     - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
-  name: Xiaomi K60 Pro
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
-  persistent_worker:
-  timeout_in: 24h
-  alias: SocratesBuild
-  depends_on: DitingBuild
-  clean_script:
-    - cd $CHERISH_WORKING_DIR
-    - rm -rf device/xiaomi/sm8450-common
-    - rm -rf device/xiaomi/cupid
-    - rm -rf device/xiaomi/zeus
-    - rm -rf device/xiaomi/mayfly
-    - rm -rf device/xiaomi/unicorn
-    - rm -rf device/xiaomi/diting
-    - rm -rf vendor/xiaomi/sm8450-common
-    - rm -rf vendor/xiaomi/cupid
-    - rm -rf vendor/xiaomi/zeus
-    - rm -rf vendor/xiaomi/mayfly
-    - rm -rf vendor/xiaomi/unicorn
-    - rm -rf vendor/xiaomi/diting
-    - rm -rf kernel/xiaomi/sm845*
-    - rm -rf device/xiaomi/miuicamera-cupid
-    - rm -rf vendor/xiaomi/miuicamera-cupid
-  clone_script:
-    - cd $CHERISH_WORKING_DIR
-    - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_socrates.git device/xiaomi/socrates
-    - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_sm8550-common.git device/xiaomi/sm8550-common
-    - git clone -b 16.0 --single-branch --depth=1 --recurse-submodules https://github.com/dopaemon/android_kernel_xiaomi_sm8550.git kernel/xiaomi/sm8550
-    - git clone -b lineage-23.0 --single-branch https://github.com/TheMuppets/proprietary_vendor_xiaomi_socrates.git vendor/xiaomi/socrates
-    - git clone -b lineage-23.0 --single-branch https://github.com/TheMuppets/proprietary_vendor_xiaomi_sm8550-common.git vendor/xiaomi/sm8550-common
-    - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-modules.git kernel/xiaomi/sm8550-modules
-    - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-devicetrees.git kernel/xiaomi/sm8550-devicetrees
-  socrates_script:
-    - cd $CHERISH_WORKING_DIR
-    - DEVICE="socrates"
-    - . build/envsetup.sh > /dev/null 2>&1 || true
-    - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
-
-task:
   name: Upload
   skip: $CIRRUS_BRANCH != 'CherishOS-A16'
   persistent_worker:
@@ -154,7 +114,6 @@ task:
     - MayflyBuild
     - UnicornBuild
     - DitingBuild
-    - SocratesBuild
 
   sourceforge_script:
     - cd $CIRRUS_OUT_DIR/
