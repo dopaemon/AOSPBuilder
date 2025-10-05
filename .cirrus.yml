@@ -2,14 +2,14 @@ env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
     DEBIAN_FRONTEND: "noninteractive"
-    CHERISH_WORKING_DIR: "/home/kernelpanix/LunarisAOSP"
-    CIRRUS_OUT_DIR: "/home/kernelpanix/out/LunarisAOSP"
+    CHERISH_WORKING_DIR: "/home/kernelpanix/DerpFest"
+    CIRRUS_OUT_DIR: "/home/kernelpanix/out/DerpFest"
     PD_API_KEY: ENCRYPTED[34bc583e19c47c56dc0c1f9950553e9d9c8ec6dcee3c46ed85b83d089ae3e7546324f893ff919531195207645caf9333]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
 
 task:
   name: Enviroment
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  skip: $CIRRUS_BRANCH != 'DerpFest-A16'
   alias: Enviroment
   persistent_worker:
   timeout_in: 24h
@@ -35,7 +35,7 @@ task:
 
 task:
   name: Xiaomi 12
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  skip: $CIRRUS_BRANCH != 'DerpFest-A16'
   alias: CupidBuild
   depends_on: Enviroment
   persistent_worker:
@@ -44,12 +44,12 @@ task:
     - cd $CHERISH_WORKING_DIR
     - DEVICE="cupid"
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Lunaris-AOSP-$DEVICE*.zip $CIRRUS_OUT_DIR/
+    - lunch lineage_$DEVICE-bp2a-user && mka derp -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12 Pro
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  skip: $CIRRUS_BRANCH != 'DerpFest-A16'
   persistent_worker:
   timeout_in: 24h
   alias: ZeusBuild
@@ -58,12 +58,12 @@ task:
     - cd $CHERISH_WORKING_DIR
     - DEVICE="zeus"
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Lunaris-AOSP-$DEVICE*.zip $CIRRUS_OUT_DIR/
+    - lunch lineage_$DEVICE-bp2a-user && mka derp -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12S
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  skip: $CIRRUS_BRANCH != 'DerpFest-A16'
   persistent_worker:
   timeout_in: 24h
   alias: MayflyBuild
@@ -72,12 +72,12 @@ task:
     - cd $CHERISH_WORKING_DIR
     - DEVICE="mayfly"
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Lunaris-AOSP-$DEVICE*.zip $CIRRUS_OUT_DIR/
+    - lunch lineage_$DEVICE-bp2a-user && mka derp -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12S Pro
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  skip: $CIRRUS_BRANCH != 'DerpFest-A16'
   persistent_worker:
   timeout_in: 24h
   alias: UnicornBuild
@@ -86,12 +86,12 @@ task:
     - cd $CHERISH_WORKING_DIR
     - DEVICE="unicorn"
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Lunaris-AOSP-$DEVICE*.zip $CIRRUS_OUT_DIR/
+    - lunch lineage_$DEVICE-bp2a-user && mka derp -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12T Pro
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  skip: $CIRRUS_BRANCH != 'DerpFest-A16'
   persistent_worker:
   timeout_in: 24h
   alias: DitingBuild
@@ -100,12 +100,12 @@ task:
     - cd $CHERISH_WORKING_DIR
     - DEVICE="diting"
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Lunaris-AOSP-$DEVICE*.zip $CIRRUS_OUT_DIR/
+    - lunch lineage_$DEVICE-bp2a-user && mka derp -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/DerpFest-*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Upload
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  skip: $CIRRUS_BRANCH != 'DerpFest-A16'
   persistent_worker:
   timeout_in: 24h
   depends_on:
@@ -117,7 +117,7 @@ task:
 
   sourceforge_script:
     - cd $CIRRUS_OUT_DIR/
-    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/LunarisAOSP
+    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/DerpFest
 
   pixeldrain_script:
     - cd $CIRRUS_OUT_DIR/
