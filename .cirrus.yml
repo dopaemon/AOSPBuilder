@@ -2,14 +2,14 @@ env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
     DEBIAN_FRONTEND: "noninteractive"
-    CHERISH_WORKING_DIR: "/home/kernelpanix/CherishOS"
-    CIRRUS_OUT_DIR: "/home/kernelpanix/out/CherishOS"
+    CHERISH_WORKING_DIR: "/home/kernelpanix/VoltageOS"
+    CIRRUS_OUT_DIR: "/home/kernelpanix/out/VoltageOS"
     PD_API_KEY: ENCRYPTED[34bc583e19c47c56dc0c1f9950553e9d9c8ec6dcee3c46ed85b83d089ae3e7546324f893ff919531195207645caf9333]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
 
 task:
   name: Enviroment
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  skip: $CIRRUS_BRANCH != 'VoltageOS-A16'
   alias: Enviroment
   persistent_worker:
   timeout_in: 24h
@@ -35,7 +35,7 @@ task:
 
 task:
   name: Xiaomi 12
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  skip: $CIRRUS_BRANCH != 'VoltageOS-A16'
   alias: CupidBuild
   depends_on: Enviroment
   persistent_worker:
@@ -45,11 +45,11 @@ task:
     - DEVICE="cupid"
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
+    - mv out/target/product/$DEVICE/voltage*$DEVICE*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12 Pro
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  skip: $CIRRUS_BRANCH != 'VoltageOS-A16'
   persistent_worker:
   timeout_in: 24h
   alias: ZeusBuild
@@ -59,11 +59,11 @@ task:
     - DEVICE="zeus"
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
+    - mv out/target/product/$DEVICE/voltage*$DEVICE*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12S
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  skip: $CIRRUS_BRANCH != 'VoltageOS-A16'
   persistent_worker:
   timeout_in: 24h
   alias: MayflyBuild
@@ -73,11 +73,11 @@ task:
     - DEVICE="mayfly"
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
+    - mv out/target/product/$DEVICE/voltage*$DEVICE*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12S Pro
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  skip: $CIRRUS_BRANCH != 'VoltageOS-A16'
   persistent_worker:
   timeout_in: 24h
   alias: UnicornBuild
@@ -87,11 +87,11 @@ task:
     - DEVICE="unicorn"
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
+    - mv out/target/product/$DEVICE/voltage*$DEVICE*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Xiaomi 12T Pro
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  skip: $CIRRUS_BRANCH != 'VoltageOS-A16'
   persistent_worker:
   timeout_in: 24h
   alias: DitingBuild
@@ -101,51 +101,11 @@ task:
     - DEVICE="diting"
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
-
-task:
-  name: Xiaomi K60 Pro
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
-  persistent_worker:
-  timeout_in: 24h
-  alias: SocratesBuild
-  depends_on: DitingBuild
-  clean_script:
-    - cd $CHERISH_WORKING_DIR
-    - rm -rf device/xiaomi/sm8450-common
-    - rm -rf device/xiaomi/cupid
-    - rm -rf device/xiaomi/zeus
-    - rm -rf device/xiaomi/mayfly
-    - rm -rf device/xiaomi/unicorn
-    - rm -rf device/xiaomi/diting
-    - rm -rf vendor/xiaomi/sm8450-common
-    - rm -rf vendor/xiaomi/cupid
-    - rm -rf vendor/xiaomi/zeus
-    - rm -rf vendor/xiaomi/mayfly
-    - rm -rf vendor/xiaomi/unicorn
-    - rm -rf vendor/xiaomi/diting
-    - rm -rf kernel/xiaomi/sm845*
-    - rm -rf device/xiaomi/miuicamera-cupid
-    - rm -rf vendor/xiaomi/miuicamera-cupid
-  clone_script:
-    - cd $CHERISH_WORKING_DIR
-    - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_socrates.git device/xiaomi/socrates
-    - git clone -b cherish-16 --single-branch https://github.com/dopaemon/android_device_xiaomi_sm8550-common.git device/xiaomi/sm8550-common
-    - git clone -b 16.0 --single-branch --depth=1 --recurse-submodules https://github.com/dopaemon/android_kernel_xiaomi_sm8550.git kernel/xiaomi/sm8550
-    - git clone -b lineage-23.0 --single-branch https://github.com/TheMuppets/proprietary_vendor_xiaomi_socrates.git vendor/xiaomi/socrates
-    - git clone -b lineage-23.0 --single-branch https://github.com/TheMuppets/proprietary_vendor_xiaomi_sm8550-common.git vendor/xiaomi/sm8550-common
-    - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-modules.git kernel/xiaomi/sm8550-modules
-    - git clone -b 16.0 --single-branch https://github.com/crdroidandroid/android_kernel_xiaomi_sm8550-devicetrees.git kernel/xiaomi/sm8550-devicetrees
-  socrates_script:
-    - cd $CHERISH_WORKING_DIR
-    - DEVICE="socrates"
-    - . build/envsetup.sh > /dev/null 2>&1 || true
-    - brunch $DEVICE | tee log.txt
-    - mv out/target/product/$DEVICE/CherishOS*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
+    - mv out/target/product/$DEVICE/voltage*$DEVICE*.zip $CIRRUS_OUT_DIR/
 
 task:
   name: Upload
-  skip: $CIRRUS_BRANCH != 'CherishOS-A16'
+  skip: $CIRRUS_BRANCH != 'VoltageOS-A16'
   persistent_worker:
   timeout_in: 24h
   depends_on:
@@ -154,11 +114,10 @@ task:
     - MayflyBuild
     - UnicornBuild
     - DitingBuild
-    - SocratesBuild
 
   sourceforge_script:
     - cd $CIRRUS_OUT_DIR/
-    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/CherishOS
+    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/VoltageOS
 
   pixeldrain_script:
     - cd $CIRRUS_OUT_DIR/
