@@ -57,7 +57,7 @@ task:
 
 task:
   name: Xiaomi 12 Pro
-  skip: $CIRRUS_BRANCH != 'Lunaris-A16'
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
   persistent_worker:
   timeout_in: 24h
   alias: ZeusBuild
@@ -79,7 +79,7 @@ task:
 
 task:
   name: Xiaomi 12S
-  skip: $CIRRUS_BRANCH != 'Lunaris-A16'
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
   persistent_worker:
   timeout_in: 24h
   alias: MayflyBuild
@@ -100,7 +100,7 @@ task:
 
 task:
   name: Xiaomi 12S Pro
-  skip: $CIRRUS_BRANCH != 'Lunaris-A16'
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
   persistent_worker:
   timeout_in: 24h
   alias: UnicornBuild
@@ -121,7 +121,7 @@ task:
 
 task:
   name: Xiaomi 12T Pro
-  skip: $CIRRUS_BRANCH != 'Lunaris-A16'
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
   persistent_worker:
   timeout_in: 24h
   alias: DitingBuild
@@ -142,7 +142,7 @@ task:
 
 task:
   name: Upload
-  skip: $CIRRUS_BRANCH != 'Lunaris-A16'
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
   persistent_worker:
   timeout_in: 24h
   depends_on:
