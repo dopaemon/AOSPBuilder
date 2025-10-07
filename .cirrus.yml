@@ -50,6 +50,7 @@ task:
     - sed -i 's/4700 mAh/4500 mAh/g' res/values/lunaris_strings.xml
     - sed -i 's/Amoled 120hz/Amoled 120hz/g' res/values/lunaris_strings.xml
     - DEVICE="cupid"
+    - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
@@ -71,6 +72,7 @@ task:
     - sed -i 's/4700 mAh/4600 mAh/g' res/values/lunaris_strings.xml
     - sed -i 's/Amoled 120hz/Amoled 120hz/g' res/values/lunaris_strings.xml
     - DEVICE="zeus"
+    - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
@@ -91,6 +93,7 @@ task:
     - sed -i 's/4700 mAh/4500 mAh/g' res/values/lunaris_strings.xml
     - sed -i 's/Amoled 120hz/Amoled 120hz/g' res/values/lunaris_strings.xml
     - DEVICE="mayfly"
+    - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
@@ -111,6 +114,7 @@ task:
     - sed -i 's/4700 mAh/4500 mAh/g' res/values/lunaris_strings.xml
     - sed -i 's/Amoled 120hz/Amoled 120hz/g' res/values/lunaris_strings.xml
     - DEVICE="unicorn"
+    - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
@@ -131,6 +135,7 @@ task:
     - sed -i 's/4700 mAh/5000 mAh/g' res/values/lunaris_strings.xml
     - sed -i 's/Amoled 120hz/Amoled 120hz/g' res/values/lunaris_strings.xml
     - DEVICE="diting"
+    - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
