@@ -88,7 +88,7 @@ task:
     - cd packages/apps/Settings
     - git add -vAf
     - git reset --hard HEAD
-    - sed -i 's/Nothing Phone 2/Xiaomi 12/g' res/values/lunaris_strings.xml
+    - sed -i 's/Nothing Phone 2/Xiaomi 12S/g' res/values/lunaris_strings.xml
     - sed -i 's/4700 mAh/4500 mAh/g' res/values/lunaris_strings.xml
     - sed -i 's/LTPO 120hz/120hz/g' res/values/lunaris_strings.xml
     - DEVICE="mayfly"
