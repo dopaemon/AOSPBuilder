@@ -9,7 +9,7 @@ env:
 
 task:
   name: Enviroment
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16-Floral'
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16-Socrates'
   alias: Enviroment
   persistent_worker:
   timeout_in: 24h
@@ -34,9 +34,9 @@ task:
     - tar -xvf go-pd_1.5.0_linux_amd64.tar.gz
 
 task:
-  name: Google Pixel 4
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16-Floral'
-  alias: FlameBuild
+  name: Xiaomi K60 Pro
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16-Socrates'
+  alias: SocratesBuild
   depends_on: Enviroment
   persistent_worker:
   timeout_in: 24h
@@ -45,33 +45,11 @@ task:
     - cd packages/apps/Settings
     - git add -vAf
     - git reset --hard HEAD
-    - sed -i 's/Nothing Phone 2/Google Pixel 4/g' res/values/lunaris_strings.xml
-    - sed -i 's/8+ Gen 1/855/g' res/values/lunaris_strings.xml
-    - sed -i 's/4700 mAh/2800 mAh/g' res/values/lunaris_strings.xml
-    - sed -i 's/LTPO 120hz/60hz/g' res/values/lunaris_strings.xml
-    - DEVICE="flame"
-    - cd $CHERISH_WORKING_DIR
-    - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
-
-task:
-  name: Google Pixel 4XL
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16-Floral'
-  alias: CoralBuild
-  depends_on: FlameBuild
-  persistent_worker:
-  timeout_in: 24h
-  cupid_script:
-    - cd $CHERISH_WORKING_DIR
-    - cd packages/apps/Settings
-    - git add -vAf
-    - git reset --hard HEAD
-    - sed -i 's/Nothing Phone 2/Google Pixel 4/g' res/values/lunaris_strings.xml
-    - sed -i 's/8+ Gen 1/855/g' res/values/lunaris_strings.xml
-    - sed -i 's/4700 mAh/3700 mAh/g' res/values/lunaris_strings.xml
-    - sed -i 's/LTPO 120hz/90hz/g' res/values/lunaris_strings.xml
-    - DEVICE="coral"
+    - sed -i 's/ICorn 10 Pro Max/Xiaomi K60 Pro/g' res/values/lunaris_strings.xml
+    - sed -i 's/Chicken Nuggets® 52/Snapdragon® 8 Gen 2/g' res/values/lunaris_strings.xml
+    - sed -i 's/15000 mAh/5000 mAh/g' res/values/lunaris_strings.xml
+    - sed -i 's/Cathode Ray Tube 24hz/Amoled 120hz/g' res/values/lunaris_strings.xml
+    - DEVICE="socrates"
     - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
     - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
@@ -79,12 +57,11 @@ task:
 
 task:
   name: Upload
-  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16-Floral'
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16-Socrates'
   persistent_worker:
   timeout_in: 24h
   depends_on:
-    - FlameBuild
-    - CoralBuild
+    - SocratesBuild
 
   pixeldrain_script:
     - cd $CIRRUS_OUT_DIR/
