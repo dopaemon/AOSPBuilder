@@ -117,10 +117,10 @@ task:
     - UnicornBuild
     - DitingBuild
 
-  sourceforge_script:
-    - cd /home/kernelpanix/out/InfinityX
-    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/InfinityX
-
   pixeldrain_script:
     - cd /home/kernelpanix/out/InfinityX
     -  ./go-pd upload -k $PD_API_KEY *.zip -v
+
+  sourceforge_script:
+    - cd /home/kernelpanix/out/InfinityX
+    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/InfinityX
