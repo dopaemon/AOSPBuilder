@@ -44,6 +44,7 @@ task:
     - riseup $DEVICE user
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - cp -r out/target/product/$DEVICE/$DEVICE.json /home/kernelpanix/out/RisingOS/
 
 task:
   name: Xiaomi 12 Pro
@@ -59,6 +60,7 @@ task:
     - riseup $DEVICE user
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - cp -r out/target/product/$DEVICE/$DEVICE.json /home/kernelpanix/out/RisingOS/
 
 task:
   name: Xiaomi 12S
@@ -74,6 +76,7 @@ task:
     - riseup $DEVICE user
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - cp -r out/target/product/$DEVICE/$DEVICE.json /home/kernelpanix/out/RisingOS/
 
 task:
   name: Xiaomi 12S Pro
@@ -89,6 +92,7 @@ task:
     - riseup $DEVICE user
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - cp -r out/target/product/$DEVICE/$DEVICE.json /home/kernelpanix/out/RisingOS/
 
 task:
   name: Xiaomi 12T Pro
@@ -104,6 +108,7 @@ task:
     - riseup $DEVICE user
     - rise b -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - cp -r out/target/product/$DEVICE/$DEVICE.json /home/kernelpanix/out/RisingOS/
 
 task:
   name: Upload
