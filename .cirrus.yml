@@ -106,6 +106,21 @@ task:
     - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
 
 task:
+  name: Xiaomi Poco F4 GT
+  skip: $CIRRUS_BRANCH != 'InfinityX-A16'
+  persistent_worker:
+  timeout_in: 24h
+  alias: IngresBuild
+  depends_on: DitingBuild
+  diting_script:
+    - DEVICE="ingres"
+    - cd /home/kernelpanix/InfinityX
+    - . build/envsetup.sh > /dev/null 2>&1 || true
+    - lunch infinity_$DEVICE-user
+    - m bacon -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
+
+task:
   name: Upload
   skip: $CIRRUS_BRANCH != 'InfinityX-A16'
   persistent_worker:
@@ -116,6 +131,7 @@ task:
     - MayflyBuild
     - UnicornBuild
     - DitingBuild
+    - IngresBuild
 
   pixeldrain_script:
     - cd /home/kernelpanix/out/InfinityX
