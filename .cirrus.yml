@@ -111,6 +111,22 @@ task:
     - cp -r out/target/product/$DEVICE/$DEVICE.json /home/kernelpanix/out/RisingOS/
 
 task:
+  name: Xiaomi Poco F4 GT
+  skip: $CIRRUS_BRANCH != 'RisingOS-A16'
+  persistent_worker:
+  timeout_in: 24h
+  alias: IngresBuild
+  depends_on: DitingBuild
+  diting_script:
+    - DEVICE="ingres"
+    - cd /home/kernelpanix/RisingOS
+    - . build/envsetup.sh || true
+    - riseup $DEVICE user
+    - rise b -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/RisingOS*-$DEVICE-*.zip /home/kernelpanix/out/RisingOS/
+    - cp -r out/target/product/$DEVICE/$DEVICE.json /home/kernelpanix/out/RisingOS/
+
+task:
   name: Upload
   skip: $CIRRUS_BRANCH != 'RisingOS-A16'
   persistent_worker:
@@ -121,6 +137,7 @@ task:
     - MayflyBuild
     - UnicornBuild
     - DitingBuild
+    - IngresBuild
 
   sourceforge_script:
     - cd /home/kernelpanix/out/RisingOS
