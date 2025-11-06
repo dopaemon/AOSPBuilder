@@ -6,11 +6,29 @@ env:
     CIRRUS_OUT_DIR: "/home/kernelpanix/out/LunarisAOSP"
     PD_API_KEY: ENCRYPTED[34bc583e19c47c56dc0c1f9950553e9d9c8ec6dcee3c46ed85b83d089ae3e7546324f893ff919531195207645caf9333]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
+    GIT_SETUP: ENCRYPTED[!358e10f55f22b3d6475038f3deaa54d872fdad149ab0bc77c0d62441aa05bd2ae5c1da85352dcf76471b3eb81d559e36!]
+
+task:
+  name: LunarisAOSP Sync
+  skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
+  alias: SyncTask
+  persistent_worker:
+  timeout_in: 24h
+
+  sync_script:
+    - rm -rf $CHERISH_WORKING_DIR
+    - mkdir -p $CHERISH_WORKING_DIR
+    - cd $CHERISH_WORKING_DIR/
+    - repo init -u https://github.com/Lunaris-AOSP/android -b 16 --git-lfs
+    - git clone -b lunaris-16 https://github.com/dopaemon/android_manifests.git .repo/local_manifests
+    - git clone https://github.com/Android-Unofficial/android_vendor_lineage-priv_keys.git vendor/lineage-priv/keys
+    - repo sync -v -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
 
 task:
   name: Enviroment
   skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
   alias: Enviroment
+  depends_on: SyncTask
   persistent_worker:
   timeout_in: 24h
 
@@ -32,6 +50,9 @@ task:
     - tar -xvf sshpass-1.1.5-x86_64-linux.tar.xz
     - wget https://github.com/ManuelReschke/go-pd/releases/download/v1.5.0/go-pd_1.5.0_linux_amd64.tar.gz
     - tar -xvf go-pd_1.5.0_linux_amd64.tar.gz
+
+  git_setup:
+    - bash -c $GIT_SETUP
 
 task:
   name: Xiaomi 12
