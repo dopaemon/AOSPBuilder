@@ -201,8 +201,8 @@ task:
 
   pixeldrain_script:
     - cd $CIRRUS_OUT_DIR/
-    -  ./go-pd upload -k $PD_API_KEY *.zip -v
+    -  ./go-pd upload -k $PD_API_KEY *.zip -v || ./go-pd upload -k $PD_API_KEY *.zip -v
 
   sourceforge_script:
     - cd $CIRRUS_OUT_DIR/
-    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/Lunaris
+    - ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/Lunaris || ./sshpass -p $SF_PASSWORD rsync -avP ./*.zip dopaemon@frs.sourceforge.net:/home/frs/project/android-unofficial/Android-16/Lunaris
