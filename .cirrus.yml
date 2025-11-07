@@ -109,6 +109,21 @@ task:
     - mv out/target/product/$DEVICE/MistOS-*-$DEVICE-*FFICIAL.zip $CIRRUS_OUT_DIR/
 
 task:
+  name: Xiaomi Poco F4 GT
+  skip: $CIRRUS_BRANCH != 'MistOS-A16'
+  persistent_worker:
+  timeout_in: 24h
+  alias: IngresBuild
+  depends_on: DitingBuild
+  diting_script:
+    - cd $CHERISH_WORKING_DIR
+    - DEVICE="ingres"
+    - cd $CHERISH_WORKING_DIR
+    - . build/envsetup.sh > /dev/null 2>&1 || true
+    - mistify $DEVICE user && mist b -j$(nproc --all) | tee log.txt
+    - mv out/target/product/$DEVICE/MistOS-*-$DEVICE-*FFICIAL.zip $CIRRUS_OUT_DIR/
+
+task:
   name: Upload
   skip: $CIRRUS_BRANCH != 'MistOS-A16'
   persistent_worker:
@@ -119,6 +134,7 @@ task:
     - MayflyBuild
     - UnicornBuild
     - DitingBuild
+    - IngresBuild
 
   pixeldrain_script:
     - cd $CIRRUS_OUT_DIR/
