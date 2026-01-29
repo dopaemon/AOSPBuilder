@@ -172,19 +172,20 @@ task:
   alias: IngresBuild
   depends_on: DitingBuild
   diting_script:
-    - cd $CHERISH_WORKING_DIR
-    - cd packages/apps/Settings
-    - git add -vAf
-    - git reset --hard HEAD
-    - sed -i 's/ICorn 10 Pro Max/Xiaomi Poco F4 GT/g' res/values/lunaris_strings.xml
-    - sed -i 's/Chicken Nuggets® 52/Snapdragon® 8 Gen 1/g' res/values/lunaris_strings.xml
-    - sed -i 's/15000 mAh/4700 mAh/g' res/values/lunaris_strings.xml
-    - sed -i 's/Cathode Ray Tube 24hz/Amoled 120hz/g' res/values/lunaris_strings.xml
-    - DEVICE="ingres"
-    - cd $CHERISH_WORKING_DIR
-    - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
+    #- cd $CHERISH_WORKING_DIR
+    #- cd packages/apps/Settings
+    #- git add -vAf
+    #- git reset --hard HEAD
+    #- sed -i 's/ICorn 10 Pro Max/Xiaomi Poco F4 GT/g' res/values/lunaris_strings.xml
+    #- sed -i 's/Chicken Nuggets® 52/Snapdragon® 8 Gen 1/g' res/values/lunaris_strings.xml
+    #- sed -i 's/15000 mAh/4700 mAh/g' res/values/lunaris_strings.xml
+    #- sed -i 's/Cathode Ray Tube 24hz/Amoled 120hz/g' res/values/lunaris_strings.xml
+    #- DEVICE="ingres"
+    #- cd $CHERISH_WORKING_DIR
+    #- . build/envsetup.sh > /dev/null 2>&1 || true
+    #- lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
+    #- mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
+    - echo "Skip"
 
 task:
   name: Upload
