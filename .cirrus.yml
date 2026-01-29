@@ -113,12 +113,12 @@ task:
   alias: IngresBuild
   depends_on: DitingBuild
   diting_script:
-    - DEVICE="ingres"
+    # - DEVICE="ingres"
     - cd /home/kernelpanix/InfinityX
-    - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch infinity_$DEVICE-user
-    - m bacon -j$(nproc --all) | tee log.txt
-    - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
+    # - . build/envsetup.sh > /dev/null 2>&1 || true
+    # - lunch infinity_$DEVICE-user
+    # - m bacon -j$(nproc --all) | tee log.txt
+    # - mv out/target/product/$DEVICE/Proje*$DEVICE*.zip /home/kernelpanix/out/InfinityX/
 
 task:
   name: Upload
