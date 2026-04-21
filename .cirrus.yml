@@ -138,7 +138,7 @@ task:
 
   pixeldrain_script:
     - cd $CIRRUS_OUT_DIR/
-    -  ./go-pd upload -k $PD_API_KEY *.zip -v || ./go-pd upload -k $PD_API_KEY *.zip -v
+    -  ./go-pd upload -vk $PD_API_KEY *.zip || ./go-pd upload -vk $PD_API_KEY *.zip
 
   sourceforge_script:
     - cd $CIRRUS_OUT_DIR/
