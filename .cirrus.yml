@@ -2,8 +2,8 @@ env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
     DEBIAN_FRONTEND: "noninteractive"
-    CHERISH_WORKING_DIR: "/home/dopaemon/LunarisAOSP"
-    CIRRUS_OUT_DIR: "/home/dopaemon/out/LunarisAOSP"
+    CHERISH_WORKING_DIR: "/serverhive/dopaemon/LunarisAOSP"
+    CIRRUS_OUT_DIR: "/serverhive/dopaemon/out/LunarisAOSP"
     PD_API_KEY: ENCRYPTED[e2514e31c9b433faf99d8e6a2451b60ebff406073578f707eb93ef58ce809f27998cb149ba88d4a089b9d8d943ddca12]
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
     # GIT_SETUP: ENCRYPTED[!d2112a9a66d49d42db587ef9c2cd2a4ec79aacb003a49085bd04db21935a8e653e4aa1792bdc9dcf0815933dfcc701ee!]
