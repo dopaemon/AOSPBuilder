@@ -8,22 +8,6 @@ env:
     SF_PASSWORD: ENCRYPTED[134c9f2823c604c8aae1c1f5ec7b34d7773665677a0d36c41883026c6b703f5362b2d92eebeb550c9a2707fbe337d721]
     # GIT_SETUP: ENCRYPTED[!d2112a9a66d49d42db587ef9c2cd2a4ec79aacb003a49085bd04db21935a8e653e4aa1792bdc9dcf0815933dfcc701ee!]
 
-# task:
-#   name: LunarisAOSP Sync
-#   skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
-#   alias: SyncTask
-#   persistent_worker:
-#   timeout_in: 24h
-
-#   sync_script:
-#     - rm -rf $CHERISH_WORKING_DIR
-#     - mkdir -p $CHERISH_WORKING_DIR
-#     - cd $CHERISH_WORKING_DIR/
-#     - repo init -u https://github.com/Lunaris-AOSP/android -b 16 --git-lfs
-#     - git clone -b lunaris-16 https://github.com/dopaemon/android_manifests.git .repo/local_manifests
-#     - git clone https://github.com/Android-Unofficial/android_vendor_lineage-priv_keys.git vendor/lineage-priv/keys
-#     - repo sync -v -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all) || repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$(nproc --all)
-
 task:
   name: Enviroment
   skip: $CIRRUS_BRANCH != 'LunarisAOSP-A16'
@@ -66,7 +50,7 @@ task:
     - DEVICE="cupid"
     - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
+    - lunch lineage_$DEVICE-bp4a-user && m bacon -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
@@ -81,7 +65,7 @@ task:
     - DEVICE="zeus"
     - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
+    - lunch lineage_$DEVICE-bp4a-user && m bacon -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
@@ -96,7 +80,7 @@ task:
     - DEVICE="mayfly"
     - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
+    - lunch lineage_$DEVICE-bp4a-user && m bacon -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
@@ -111,7 +95,7 @@ task:
     - DEVICE="unicorn"
     - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
+    - lunch lineage_$DEVICE-bp4a-user && m bacon -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
@@ -126,7 +110,7 @@ task:
     - DEVICE="diting"
     - cd $CHERISH_WORKING_DIR
     - . build/envsetup.sh > /dev/null 2>&1 || true
-    - lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
+    - lunch lineage_$DEVICE-bp4a-user && m bacon -j$(nproc --all) | tee log.txt
     - mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
 
 task:
@@ -137,19 +121,6 @@ task:
   alias: IngresBuild
   depends_on: DitingBuild
   diting_script:
-    #- cd $CHERISH_WORKING_DIR
-    #- cd packages/apps/Settings
-    #- git add -vAf
-    #- git reset --hard HEAD
-    #- sed -i 's/ICorn 10 Pro Max/Xiaomi Poco F4 GT/g' res/values/lunaris_strings.xml
-    #- sed -i 's/Chicken Nuggets® 52/Snapdragon® 8 Gen 1/g' res/values/lunaris_strings.xml
-    #- sed -i 's/15000 mAh/4700 mAh/g' res/values/lunaris_strings.xml
-    #- sed -i 's/Cathode Ray Tube 24hz/Amoled 120hz/g' res/values/lunaris_strings.xml
-    #- DEVICE="ingres"
-    #- cd $CHERISH_WORKING_DIR
-    #- . build/envsetup.sh > /dev/null 2>&1 || true
-    #- lunch lineage_$DEVICE-bp2a-user && m lunaris -j$(nproc --all) | tee log.txt
-    #- mv out/target/product/$DEVICE/Lunaris*-$DEVICE-*.zip $CIRRUS_OUT_DIR/
     - echo "Skip"
 
 task:
